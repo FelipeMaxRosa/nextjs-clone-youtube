@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     '-webkit-box-orient': 'vertical',
     overflow: 'hidden',
   },
-  avatar: {
-    marginRight: theme.spacing(1)
-  }
 }));
 
 function VideoCard({ item }) {
@@ -28,7 +25,7 @@ function VideoCard({ item }) {
     <Box>
       <img alt={item.title} src={item.thumb} className={classes.img} />
       <Box display="flex" mt={1}>
-        <Box className={classes.avatar}>
+        <Box mr={2}>
           <Avatar alt={item.authorName} src={item.authorAvatar}>
             FR
           </Avatar>

@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from "../components/Layout";
 import { Box, Grid } from '@material-ui/core';
 import VideoCard from '../components/VideoCard';
+import getVideos from '../database/getVideos';
 
 function Home({data}) {
   return (
@@ -20,57 +21,11 @@ function Home({data}) {
 }
 
 export async function getStaticProps() {
-  const data = [
-    {
-      id: 1,
-      title: 'NEXT.JS: O FRAMEWORK QUE VOCÊ DEVERIA CONHECER [PARTE #01]',
-      authorId: 1,
-      authorName: 'Felipe Rosa',
-      authorAvatar: 'avatarUrl',
-      views: 10,
-      thumb: '/thumbs/next01.png',
-      videoUrl: 'url',
-      updatedAt: String(new Date()),
-    },
-    {
-      id: 2,
-      title:
-        'NEXT.JS: ENTENDENDO A RENDERIZAÇÃO REACT NO LADO SERVIDOR [PARTE #02]',
-      authorId: 1,
-      authorName: 'Felipe Rosa',
-      authorAvatar: 'avatarUrl',
-      views: 10,
-      thumb: '/thumbs/next02.png',
-      videoUrl: 'url',
-      updatedAt: String(new Date()),
-    },
-    {
-      id: 3,
-      title: 'NEXT.JS: ROTAS ESTÁTICAS E DINÂMICAS [PARTE #03]',
-      authorId: 1,
-      authorName: 'Felipe Rosa',
-      authorAvatar: 'avatarUrl',
-      views: 10,
-      thumb: '/thumbs/next03.png',
-      videoUrl: 'url',
-      updatedAt: String(new Date()),
-    },
-    {
-      id: 4,
-      title: 'NEXT.JS: ROTAS ESTÁTICAS E DINÂMICAS [PARTE #04]',
-      authorId: 1,
-      authorName: 'Felipe Rosa',
-      authorAvatar: 'avatarUrl',
-      views: 10,
-      thumb: '/thumbs/next01.png',
-      videoUrl: 'url',
-      updatedAt: String(new Date()),
-    },
-  ];
+  const data = await getVideos();
 
   return {
     props: {
-      data: data
+      data: JSON.parse(JSON.stringify(data)),
     }, // will be passed to the page component as props
   };
 }
