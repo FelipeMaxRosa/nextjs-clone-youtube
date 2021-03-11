@@ -24,7 +24,7 @@ const handler = nc()
         updatedAt: new Date()
       });
   
-      res.status(200).json({ ok: true, newPost });
+      res.status(200).json({ ok: true, newPost: newPost.ops });
     } else {
       res.status(500).json({ error: 'client DB is not connected' });
     }
