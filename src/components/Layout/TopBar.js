@@ -10,7 +10,9 @@ import Apps from '@material-ui/icons/Apps';
 import MoreVert from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Hidden from '@material-ui/core/Hidden';
-import { Button, IconButton, InputBase, Paper } from '@material-ui/core';
+import { Button, IconButton, InputBase, Paper, Avatar } from '@material-ui/core';
+
+import { signIn, signOut, useSession } from "next-auth/client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,22 +45,27 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar() {
   const classes = useStyles();
+  const [session] = useSession();
 
   return (
     <AppBar className={classes.root} color="default">
       <Toolbar className={classes.toolbar}>
         <Box display="flex" alignItems="center">
           <MenuIcon />
-          <img src="/new-youtube-logo.svg" alt="logo" className={classes.logo}></img>
+          <img
+            src="/new-youtube-logo.svg"
+            alt="logo"
+            className={classes.logo}
+          ></img>
         </Box>
-        
+
         <Hidden mdDown>
           <Box>
             <Paper component="form" className={classes.search}>
               <InputBase
                 className={classes.input}
                 placeholder="Pesquisar"
-                inputProps={{'arial-label': 'search google maps'}}
+                inputProps={{ 'arial-label': 'search google maps' }}
               />
               <IconButton type="submit" aria-label="search">
                 <SearchIcon />
@@ -67,7 +74,7 @@ function TopBar() {
           </Box>
         </Hidden>
 
-        <Box>
+        <Box display="flex" alignItems="center">
           <IconButton>
             <VideoCall />
           </IconButton>
@@ -78,16 +85,30 @@ function TopBar() {
             <MoreVert />
           </IconButton>
 
-          <Button
-            color="secondary"
-            component="a"
-            variant="outlined"
-            startIcon={<AccountCircle />}
-          >Fazer Login</Button>
+          {!session ? (
+            <Button
+              onClick={() => signIn('google')}
+              color="secondary"
+              component="a"
+              variant="outlined"
+              startIcon={<AccountCircle />}
+            >
+              Fazer Login
+            </Button>
+          ) : (
+            <Box display="flex" alignItems="center">
+              <Avatar
+                onClick={() => signOut()}
+                alt="User"
+                className={classes.avatar}
+                src={session?.user?.image}
+              />
+            </Box>
+         )}
         </Box>
       </Toolbar>
     </AppBar>
-  )
+  );
 }
 
 export default TopBar;

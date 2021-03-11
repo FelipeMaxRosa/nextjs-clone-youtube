@@ -10,7 +10,7 @@ function Home({data}) {
       <Box p={2}>
         <Grid container spacing={4}>
           {data.map((item) => (
-            <Grid key={item.id} item lg={3} md={4} sm={6} xs={12}>
+            <Grid key={item._id} item lg={3} md={4} sm={6} xs={12}>
               <VideoCard item={item} />
             </Grid>
           ))}

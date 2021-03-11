@@ -12,6 +12,8 @@ import Whatshot from '@material-ui/icons/Whatshot';
 import VideoLibrary from '@material-ui/icons/VideoLibrary';
 import History from '@material-ui/icons/History';
 import { AccountCircle } from '@material-ui/icons';
+import { signIn } from 'next-auth/client';
+
 
 const useStyles = makeStyles((theme) => ({
   mobileDrawer: {
@@ -121,6 +123,7 @@ function NavBar() {
         </Typography>
         <Box mt={2}>
           <Button
+            onClick={() => signIn('google')}
             variant="outlined"
             color="secondary"
             startIcon={<AccountCircle />}
