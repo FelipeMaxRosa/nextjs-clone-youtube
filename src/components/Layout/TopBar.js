@@ -11,8 +11,10 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Hidden from '@material-ui/core/Hidden';
 import { Button, IconButton, InputBase, Paper, Avatar } from '@material-ui/core';
-
 import { signIn, signOut, useSession } from "next-auth/client";
+import useSettings from '../../hooks/useSettings';
+import { THEMES } from '../../utils/constants';
+import { Brightness4, Brightness7 } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 function TopBar() {
   const classes = useStyles();
   const [session] = useSession();
+  const  {settings, saveSettings} = useSettings();
 
   return (
     <AppBar className={classes.root} color="default">
@@ -53,7 +56,11 @@ function TopBar() {
         <Box display="flex" alignItems="center">
           <MenuIcon />
           <img
-            src="/new-youtube-logo.svg"
+            src={
+              settings.theme === THEMES.DARK
+                ? '/branco.png'
+                : '/new-youtube-logo.svg'
+            }
             alt="logo"
             className={classes.logo}
           ></img>
@@ -75,6 +82,17 @@ function TopBar() {
         </Hidden>
 
         <Box display="flex" alignItems="center">
+          <IconButton className={classes.icon}>
+            {settings.theme === THEMES.DARK ? (
+              <Brightness7
+                onClick={() => saveSettings({ theme: THEMES.LIGHT })}
+              />
+            ) : (
+              <Brightness4
+                onClick={() => saveSettings({ theme: THEMES.DARK })}
+              />
+            )}
+          </IconButton>
           <IconButton>
             <VideoCall />
           </IconButton>
@@ -104,7 +122,7 @@ function TopBar() {
                 src={session?.user?.image}
               />
             </Box>
-         )}
+          )}
         </Box>
       </Toolbar>
     </AppBar>
